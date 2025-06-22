@@ -15,3 +15,8 @@ context.strokeStyle = "#ff8";
 context.arc(1000, 500, 100, 0, Math.PI * 2, false);
 context.closePath();
 context.stroke();
+
+context.beginPath();
+context.arc(800, 200, 100, 0, Math.PI * 2, false);
+context.closePath();
+context.stroke();
