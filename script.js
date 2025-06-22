@@ -20,3 +20,34 @@ context.beginPath();
 context.arc(800, 200, 100, 0, Math.PI * 2, false);
 context.closePath();
 context.stroke();
+
+class Circle {
+  constructor(x, y, rad, color) {
+    this.x = x;
+    this.y = y;
+    this.rad = rad;
+    this.color = color;
+  }
+
+  draw(context) {
+    context.beginPath();
+    context.strokeStyle = this.color;
+    context.lineWidth = 10;
+    context.arc(this.x, this.y, this.rad, 0, Math.PI * 2, false);
+    context.stroke();
+  }
+}
+
+const creatCircles = (circle) => {
+  circle.draw(context);
+};
+
+const allCircles = [];
+
+for (let number = 0; number < 40; number++) {
+  const randomX = Math.floor(Math.random() * window.innerWidth);
+  const randomY = Math.floor(Math.random() * window.innerHeight);
+  const myCircle = new Circle(randomX, randomY, 50, "#ff8");
+  allCircles.push(myCircle);
+  creatCircles(allCircles[number]);
+}
