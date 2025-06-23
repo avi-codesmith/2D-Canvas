@@ -22,6 +22,7 @@ canvas.style.background = "royalblue";
 // context.stroke();
 
 let counter = 0;
+let isMoving = true; // Toggle flag
 
 class Circle {
   constructor(x, y, rad, color, text, speed) {
@@ -66,15 +67,25 @@ class Circle {
 }
 
 let myCircle = new Circle(1000, 500, 50, "#ff8", counter, 2);
-myCircle.draw(context);
 
 function animate() {
   requestAnimationFrame(animate);
   context.clearRect(0, 0, canvas.width, canvas.height);
 
-  myCircle.update(context);
+  if (isMoving) {
+    myCircle.update(context);
+  } else {
+    myCircle.draw(context);
+  }
 }
+
 animate();
+
+document.addEventListener("keydown", function (e) {
+  if (e.code === "Space") {
+    isMoving = !isMoving;
+  }
+});
 
 // const creatCircles = (circle) => {
 //   circle.draw(context);
