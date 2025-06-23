@@ -21,13 +21,17 @@ canvas.style.background = "royalblue";
 // context.closePath();
 // context.stroke();
 
+let counter = 0;
+
 class Circle {
-  constructor(x, y, rad, color, text) {
+  constructor(x, y, rad, color, text, speed) {
     this.x = x;
     this.y = y;
     this.rad = rad;
     this.color = color;
     this.text = text;
+    this.dx = speed;
+    this.dy = speed;
   }
 
   draw(context) {
@@ -42,20 +46,48 @@ class Circle {
     context.arc(this.x, this.y, this.rad, 0, Math.PI * 2, false);
     context.stroke();
   }
+
+  update(context) {
+    this.x += this.dx;
+    this.y += this.dy;
+
+    if (this.x + this.rad > canvas.width || this.x - this.rad < 0) {
+      this.dx *= -1;
+      counter++;
+    }
+    if (this.y + this.rad > canvas.height || this.y - this.rad < 0) {
+      this.dy *= -1;
+      counter++;
+    }
+
+    this.text = counter;
+    this.draw(context);
+  }
 }
 
-const creatCircles = (circle) => {
-  circle.draw(context);
-};
+let myCircle = new Circle(1000, 500, 50, "#ff8", counter, 2);
+myCircle.draw(context);
 
-const allCircles = [];
-let circleCounter = 1;
+function animate() {
+  requestAnimationFrame(animate);
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
-for (let number = 0; number < 5; number++) {
-  const randomX = Math.floor(Math.random() * window.innerWidth);
-  const randomY = Math.floor(Math.random() * window.innerHeight);
-  const myCircle = new Circle(randomX, randomY, 50, "#ff8", circleCounter);
-  allCircles.push(myCircle);
-  creatCircles(allCircles[number]);
-  circleCounter++;
+  myCircle.update(context);
 }
+animate();
+
+// const creatCircles = (circle) => {
+//   circle.draw(context);
+// };
+
+// const allCircles = [];
+// let circleCounter = 1;
+
+// for (let number = 0; number < 5; number++) {
+//   const randomX = Math.floor(Math.random() * window.innerWidth);
+//   const randomY = Math.floor(Math.random() * window.innerHeight);
+//   const myCircle = new Circle(randomX, randomY, 50, "#ff8", circleCounter);
+//   allCircles.push(myCircle);
+//   creatCircles(allCircles[number]);
+//   circleCounter++;
+// }
